@@ -1,0 +1,89 @@
+{
+	"gitinspector": {
+		"version": "0.5.0dev",
+		"repository": "git-stats",
+		"report_date": "2018/05/17",
+		"changes": {
+			"message": "The following historical commit information, by author, was found",
+			"authors": [
+			{
+				"name": "Ionică Bizău",
+				"email": "bizauionica@gmail.com",
+				"gravatar": "https://www.gravatar.com/avatar/537f8604a91cd28e10dd7934baaf4437?default=identicon",
+				"commits": 88,
+				"insertions": 1193,
+				"deletions": 479,
+				"percentage_of_changes": 98.30
+			},{
+				"name": "Joey Hipolito",
+				"email": "hi@joeyhipolito.me",
+				"gravatar": "https://www.gravatar.com/avatar/116d415e6f9ee377a6def4cfa8974309?default=identicon",
+				"commits": 1,
+				"insertions": 2,
+				"deletions": 0,
+				"percentage_of_changes": 0.12
+			},{
+				"name": "Justin Hurley",
+				"email": "jmhurley88@gmail.com",
+				"gravatar": "https://www.gravatar.com/avatar/f716a7e12e9ccfd3e37a2a64c6d1a424?default=identicon",
+				"commits": 1,
+				"insertions": 1,
+				"deletions": 1,
+				"percentage_of_changes": 0.12
+			},{
+				"name": "Ryan Seys",
+				"email": "ryan@ryanseys.com",
+				"gravatar": "https://www.gravatar.com/avatar/a0d3ecbe29f500fc9664ca6f7a73c735?default=identicon",
+				"commits": 1,
+				"insertions": 1,
+				"deletions": 1,
+				"percentage_of_changes": 0.12
+			},{
+				"name": "Sanket Dasgupta",
+				"email": "sanketdasgupta@gmail.com",
+				"gravatar": "https://www.gravatar.com/avatar/f6a9c626cda6cb70ea8152e35b12b54b?default=identicon",
+				"commits": 1,
+				"insertions": 1,
+				"deletions": 1,
+				"percentage_of_changes": 0.12
+			},{
+				"name": "as0n",
+				"email": "as0n@gnab.fr",
+				"gravatar": "https://www.gravatar.com/avatar/6ba6fc041abc5fda8193bf7611274b08?default=identicon",
+				"commits": 1,
+				"insertions": 15,
+				"deletions": 6,
+				"percentage_of_changes": 1.23
+			}]
+		},
+		"blame": {
+			"message": "Below are the number of rows from each author that have survived and are still intact in the current revision",
+			"authors": [
+			{
+				"name": "Ionică Bizău",
+				"email": "bizauionica@gmail.com",
+				"gravatar": "https://www.gravatar.com/avatar/537f8604a91cd28e10dd7934baaf4437?default=identicon",
+				"rows": 722,
+				"stability": 60.5,
+				"age": 29.5,
+				"percentage_in_comments": 27.15
+			},{
+				"name": "Joey Hipolito",
+				"email": "hi@joeyhipolito.me",
+				"gravatar": "https://www.gravatar.com/avatar/116d415e6f9ee377a6def4cfa8974309?default=identicon",
+				"rows": 2,
+				"stability": 100.0,
+				"age": 25.2,
+				"percentage_in_comments": 0.00
+			},{
+				"name": "Ryan Seys",
+				"email": "ryan@ryanseys.com",
+				"gravatar": "https://www.gravatar.com/avatar/a0d3ecbe29f500fc9664ca6f7a73c735?default=identicon",
+				"rows": 1,
+				"stability": 100.0,
+				"age": 34.3,
+				"percentage_in_comments": 100.00
+			}]
+		}
+	}
+}
