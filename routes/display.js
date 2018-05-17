@@ -1,25 +1,38 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var dir = require('node-dir');
+var path = require('path');
 
-var viewArray = [];
-viewArray.push('a1');
+var dataSet = new Array();
 
-var dataSet =
-  ['6 people have authored code to "git-stats with 93 commits made',
-    '93 commits to "git-stats by 6 authors',
-    'git-stats has been modified by 6 authors over  93 commits made',
-    'Ionică Bizău is the top committer for "git-stats" with 98.3 percentage of all the changes',
-    'Joey Hipolito contributed 0.12 of all changes to "git-stats"',
-    'Joey Hipolito contributed 1 commits to  "git-stats"',
-    'Justin Hurley contributed 0.12 of all changes to "git-stats"',
-    'Justin Hurley contributed 1 commits to  "git-stats"',
-    'Ryan Seys contributed 0.12 of all changes to "git-stats"',
-    'Ryan Seys contributed 1 commits to  "git-stats"',
-    'Sanket Dasgupta contributed 0.12 of all changes to "git-stats"',
-    'Sanket Dasgupta contributed 1 commits to  "git-stats"',
-    'as0n contributed 1.23 of all changes to "git-stats"',
-    'as0n contributed 1 commits to  "git-stats"']
+var initDisplayText = function () {
 
+  var displayFolder = path.join(__dirname, "../onStart/displays");
+
+
+  dir.readFiles(displayFolder,
+    function (err, content, next) {
+
+      if (err) throw err;
+
+      var contArr = content.split("\n");
+
+      contArr.forEach(function (item, index) {
+        dataSet.push(item);
+      });
+
+      next();
+    },
+    function (err, files) {
+      if (err) throw err;
+      console.log('finished reading files:', files); // get filepath 
+    });
+
+
+};
+
+initDisplayText();
 
 function random_item(_arr) {
   _arr = shuffle(_arr);
@@ -46,22 +59,23 @@ function shuffle(array) {
   return array;
 }
 
-
 /* GET home page. */
 router.get('/', function (req, res, next) {
-
-  var viewToRender = 'animations'; //random_item(viewArray);
-  var textToRender = random_item(dataSet);
-
+  console.log(dataSet);
+  var viewToRender = 'animations';
   res.render(viewToRender, {
     title: 'Express',
-    text: textToRender
   });
 });
 
 router.get('/newText', function (req, res, next) {
   var returner = random_item(dataSet);
   res.json({ text: returner });
+});
+
+/* GET home page. */
+router.get('/allText', function (req, res, next) {
+  res.json({ allText: dataSet });
 });
 
 

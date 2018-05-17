@@ -4,8 +4,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var gitInspectorParser = require('./onStart/gitInspector/gitInspectorParser');
-
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var displayRouter = require('./routes/display');
@@ -22,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+app.use('/', displayRouter);
 app.use('/users', usersRouter);
 app.use('/display', displayRouter);
 app.use('/displayText', displayTextRouter);
