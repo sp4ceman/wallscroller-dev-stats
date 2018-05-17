@@ -19,7 +19,11 @@ var initDisplayText = function () {
       var contArr = content.split("\n");
 
       contArr.forEach(function (item, index) {
-        dataSet.push(item);
+        if (item.trim() != '')
+        {
+          dataSet.push(item);
+        }
+        
       });
 
       next();

@@ -1,26 +1,38 @@
 var fs = require('fs');
 var path = require('path');
 var directoryFolder = path.join(__dirname, "../peopleList");
-var filePath = path.join(directoryFolder, 'cibDig.json');
-var cibDirectory = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-var authorAndMails = cibDirectory.directory;
+var filePath = path.join(directoryFolder, 'directory.json');
+var directoryList = {};
+
+try
+{
+    directoryList = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+}
+catch(err)
+{
+    directoryList = {
+        directory : []
+    };
+
+}
 
 var cleanGroupAuthors = function (objReport) {
 
     var objDict = {};
+    var repoName = objReport.repository;
 
     for (var i = 0, len = objReport.changes.authors.length; i < len; i++) {
         var author = objReport.changes.authors[i];
         var totalMatch = false;
 
-        for (var jj = 0, _len = authorAndMails.length; jj < _len; jj++) {
-            var authorMail = authorAndMails[jj];
+        for (var jj = 0, _len = directoryList.directory.length; jj < _len; jj++) {
+            var _directoryEntry = directoryList.directory[jj];
 
             var match = false;
             var _foundMail = '';
 
-            for (var kk = 0, authorMailLength = authorMail.emails.length; kk < authorMailLength; kk++) {
-                var _email = authorMail.emails[kk];
+            for (var kk = 0, _directoryEntryEmailCount = _directoryEntry.emails.length; kk < _directoryEntryEmailCount; kk++) {
+                var _email = _directoryEntry.emails[kk];
                 if (author.email.toLowerCase().trim() == _email.toLowerCase().trim()) {
                     _foundMail = _email.toLowerCase().trim();
                     match = true;
@@ -30,22 +42,22 @@ var cleanGroupAuthors = function (objReport) {
 
             if (match) {
 
-                if (objDict[authorMail.author] != null) {
-                    var _objectAuthor = objDict[authorMail.author];
+                if (objDict[_directoryEntry.author] != null) {
+                    var _objectAuthor = objDict[_directoryEntry.author];
                     _objectAuthor.commits += author.commits;
                     _objectAuthor.percentage_of_changes += author.percentage_of_changes;
                     _objectAuthor.percentage_of_changes = Math.round(_objectAuthor.percentage_of_changes * 100) / 100;
-                    objDict[authorMail.author] = _objectAuthor;
+                    objDict[_directoryEntry.author] = _objectAuthor;
                     _objectAuthor = null;
                 }
                 else {
                     var _objectAuthor = {};
-                    _objectAuthor.name = authorMail.author;
-                    _objectAuthor.author = authorMail.author;
-                    _objectAuthor.gravatar = authorMail.gravatar;
+                    _objectAuthor.name = _directoryEntry.author;
+                    _objectAuthor.author = _directoryEntry.author;
+                    _objectAuthor.gravatar = _directoryEntry.gravatar;
                     _objectAuthor.commits = author.commits;
                     _objectAuthor.percentage_of_changes = Math.round(author.percentage_of_changes * 100) / 100;
-                    objDict[authorMail.author] = _objectAuthor;
+                    objDict[_directoryEntry.author] = _objectAuthor;
                     _objectAuthor = null;
                 }
 
@@ -55,8 +67,8 @@ var cleanGroupAuthors = function (objReport) {
         if (!totalMatch) {
             console.log(author.name + ' ' + author.email + ' never matched ever');
             console.log('creating new directory entry for : ' + author.name);
-            var newEntry = createNewCIBDigEntry(author);
-            authorAndMails.push(newEntry);
+            var newEntry = createNewDirectoryEntry(author);
+            directoryList.directory.push(newEntry);
 
             var _objectAuthor = {};
             _objectAuthor.name = author.name;
@@ -64,7 +76,7 @@ var cleanGroupAuthors = function (objReport) {
             _objectAuthor.gravatar = newEntry.gravatar;
             _objectAuthor.commits = author.commits;
             _objectAuthor.percentage_of_changes = Math.round(author.percentage_of_changes * 100) / 100;
-            objDict[authorMail.name] = _objectAuthor;
+            objDict[author.name] = _objectAuthor;
             _objectAuthor = null;
         }
     }
@@ -81,7 +93,7 @@ var cleanGroupAuthors = function (objReport) {
 
 }
 
-var createNewCIBDigEntry = function (author) {
+var createNewDirectoryEntry = function (author) {
 
     var newEntry = {
         author: author.name,
@@ -99,7 +111,7 @@ var createNewCIBDigEntry = function (author) {
 };
 
 var writeDirectoryToFile = function () {
-    const content = JSON.stringify(cibDirectory);
+    const content = JSON.stringify(directoryList);
     console.log(filePath);
     fs.writeFile(filePath, content, 'utf8', function (err) {
         if (err) {
